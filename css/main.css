@@ -8,5 +8,27 @@ html {
 }
 
 body {
-	background: #fff;
+	background: white;
+}
+
+main {
+    width: 100vw;
+    height: 100vh;
+}
+
+.white-key, .black-key {
+    stroke: black;
+    stroke-width: 2;
+}
+
+.white-key {
+    fill: white;
+}
+
+.black-key {
+    fill: black;
+}
+
+.highlighted {
+    fill: #2ea;
 }
