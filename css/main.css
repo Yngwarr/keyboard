@@ -3,6 +3,11 @@
     src: url('../font/PxPlus_IBM_CGA.ttf');
 }
 
+:root {
+    --key-color: #2ea;
+    --chord-color: #e26;
+}
+
 html {
 	font-size: 10px;
 }
@@ -14,6 +19,51 @@ body {
 main {
     width: 100vw;
     height: 100vh;
+}
+
+hr {
+    width: 100%;
+}
+
+#sidebar {
+    height: calc(100vh - 4rem);
+    width: 40rem;
+    position: absolute;
+    top: 2rem;
+    right: 2rem;
+    background: #ccc;
+    border: 2px solid black;
+}
+
+#container {
+    height: calc(100% - 4rem);
+    width: calc(100% - 4rem);
+    margin: 2rem;
+
+    display: flex;
+    flex-flow: column nowrap;
+}
+
+#container > * {
+    margin-bottom: 1rem;
+}
+
+.row {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+}
+
+.row > button {
+    width: 100%;
+}
+
+#key-toggle.active {
+    box-shadow: 0 0 10px var(--key-color);
+}
+
+#chord-toggle.active {
+    box-shadow: 0 0 10px var(--chord-color);
 }
 
 .white-key, .black-key {
@@ -29,6 +79,10 @@ main {
     fill: black;
 }
 
-.highlighted {
-    fill: #2ea;
+.key-colored {
+    fill: var(--key-color);
+}
+
+.chord-colored {
+    fill: var(--chord-color);
 }

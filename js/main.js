@@ -47,15 +47,19 @@ function svgElem(sel, params) {
     return mkElem(sel, params, SVG_NS);
 }
 
+const ctx = {
+    color: 'key'
+};
+
 const whiteWidth = 50;
 const blackWidth = whiteWidth / 2;
 
 function highlight(event) {
-    event.target.classList.toggle('highlighted');
+    event.target.classList.toggle(`${ctx.color}-colored`);
 }
 
 function whiteKey(x, y) {
-    const rect = svgElem('rect.white-key', {
+    const rect = svgElem('rect.white-key.key', {
         attr: {
             x, y,
             width: whiteWidth,
@@ -68,7 +72,7 @@ function whiteKey(x, y) {
 }
 
 function blackKey(x, y) {
-    const rect = svgElem('rect.black-key', {
+    const rect = svgElem('rect.black-key.key', {
         attr: {
             x, y,
             width: blackWidth,
@@ -82,8 +86,8 @@ function blackKey(x, y) {
 
 function keyboard() {
     const svg = svgElem('svg#kbd', {attr: { width: 800, height: 600 }});
-    const xOffset = 10;
-    const yOffset = 10;
+    const xOffset = 20;
+    const yOffset = 20;
 
     for (let i = 0; i < 15; ++i) {
         svg.appendChild(whiteKey(xOffset + i * whiteWidth, yOffset));
@@ -96,8 +100,53 @@ function keyboard() {
     return svg;
 }
 
+function setActiveColor(color) {
+    const keyToggle = document.getElementById('key-toggle');
+    const chordToggle = document.getElementById('chord-toggle');
+
+    ctx.color = color;
+    if (color === 'key') {
+        keyToggle.classList.add('active');
+        chordToggle.classList.remove('active');
+    } else if (color === 'chord') {
+        keyToggle.classList.remove('active');
+        chordToggle.classList.add('active');
+    }
+}
+
+function initControls() {
+    const keyToggle = document.getElementById('key-toggle');
+    const chordToggle = document.getElementById('chord-toggle');
+    const keyDrop = document.getElementById('key-drop');
+    const chordDrop = document.getElementById('chord-drop');
+
+    keyToggle.addEventListener('click', () => {
+        setActiveColor('key');
+    });
+
+    chordToggle.addEventListener('click', () => {
+        setActiveColor('chord');
+    });
+
+    keyDrop.addEventListener('click', () => {
+        document.querySelectorAll('.key').forEach(key => {
+            key.classList.remove('key-colored');
+        });
+    });
+
+    chordDrop.addEventListener('click', () => {
+        document.querySelectorAll('.key').forEach(key => {
+            key.classList.remove('chord-colored');
+        });
+    });
+
+    setActiveColor(ctx.color);
+}
+
 function init() {
     document.querySelector('main').appendChild(keyboard());
+
+    initControls();
 }
 
 init();
